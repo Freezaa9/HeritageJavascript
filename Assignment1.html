@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World!</title>
+</head>
+
+<body>
+
+    <script>
+
+function myObject() {func : null}
+
+myObject.prototype.create = function(tab) {
+	
+	var newO = Object.create(myObject.__proto__);
+	return workingF(tab,newO);
+
+};
+
+myObject.prototype.call = function(funcName, param) {	
+	
+	if(this[funcName]!=undefined){
+		return this[funcName].call(this,param);
+	}
+	if(!Array.isArray(this.__myProto__)){
+		return"Error no func";
+	}else{
+		for(var i=0;i<this.__myProto__.length;i++){
+			if(result == null || result == undefined || result =="Error no func")
+				var result = this.__myProto__[i].call(funcName, param);
+			else
+				break;
+		}
+		return result;
+	}
+}
+
+myObject.prototype.createClass = function(className, superClassList) {
+	return createClass(className, superClassList);
+}
+myObject.prototype.new = function() {		
+	return this;
+}
+
+var myObject = new myObject();
+
+function createClass(className, superClassList) {
+	var tab;
+	var newO = myObject.create(null);
+	newO.name = className;	
+	return workingF(superClassList,newO);
+	
+};
+
+function workingF(tab,newO){
+	if(tab==null || tab==undefined || tab.length == 0){
+		return newO;
+	}else{
+		newO.__myProto__=tab;
+		newO.func=null;
+		return newO;
+	}
+	return null;
+}
+
+//part1
+
+var obj0 = myObject.create(null);
+obj0.func = function(arg) { return "func0: " + arg; };
+var obj1 = myObject.create([obj0]);
+var obj2 = myObject.create([]);
+obj2.func = function(arg) { return "func2: " + arg; };
+var obj3 = myObject.create([obj1, obj2]);
+var result = obj3.call("func", ["hello"]);
+alert(result);
+
+
+
+//part2
+var class0 = createClass("Class0", null);
+class0.func = function(arg) { return "func0: " + arg; };
+var class1 = createClass("Class1", [class0]);
+var class2 = createClass("Class2", []);
+class2.func = function(arg) { return "func2: " + arg; };
+var class3 = createClass("Class3", [class1, class2]);
+var obj3 = class3.new();
+var result = obj3.call("func", ["hello"]);
+alert(result);
+
+    </script>
+
+</body>
+</html>
+
+
